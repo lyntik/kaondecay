@@ -1,0 +1,54 @@
+#
+# Sets some default verbose
+#
+
+
+/control/verbose 2
+/run/verbose 2
+
+/conf/calo/setLayerThick 10
+/conf/calo/setRMin 200
+/conf/calo/setRMax 350
+/conf/calo/setLayersNumberZ 10
+/conf/calo/setLayersNumberRadial 5
+/conf/calo/setLayersNumberPhi 6
+/conf/calo/setPhi 180
+/conf/calo/setGap 50
+/conf/calo/setParticleToCalorimeterDistance 350
+/conf/cube/useCube 1
+/conf/cube/setISOToDetectorDistance 500
+/conf/cube/setGap 0
+/conf/cube/setSamplesNumber 10
+
+
+/run/initialize
+
+#
+# Create a scene handler for a specific graphics system
+# (Edit the next line(s) to choose another graphics system)
+#
+/vis/open OGLSX 600x600-0+0
+#/vis/open OGLSQt 600x600-0+0
+#
+#/vis/open OGLIXm
+#####/vis/open OGLSXm
+####/vis/open HepRepXML
+#
+####/vis/open DAWNFILE
+#
+# draw scene
+#
+/vis/drawVolume
+
+/vis/viewer/set/viewpointThetaPhi 90 180 deg
+/vis/viewer/zoom 0.8
+#
+# for drawing the tracks
+/vis/scene/add/trajectories
+# (if too many tracks cause core dump => /tracking/storeTrajectory 0)
+# for drawing the hits, uncomment next line
+# /vis/scene/add/hits
+# (if you prefer refreshing each event, comment out next line)
+/vis/scene/endOfEventAction accumulate
+#
+#/run/beamOn 10

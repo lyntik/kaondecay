@@ -1,0 +1,37 @@
+# $Id: run1.mac 85993 2014-11-06 16:34:10Z ihrivnac $
+#
+# Macro file of "exampleB3.cc"
+#
+# Change the default number of workers (in multi-threading mode) 
+# /run/numberOfWorkers 
+#
+# Initialize kernel
+
+/conf/calo/setLayerThick 10
+/conf/calo/setRMin 200
+/conf/calo/setRMax 350
+/conf/calo/setLayersNumberZ 10
+/conf/calo/setLayersNumberRadial 5
+/conf/calo/setLayersNumberPhi 6
+/conf/calo/setPhi 180
+/conf/calo/setGap 50
+/conf/calo/setParticleToCalorimeterDistance 350
+/conf/cube/useCube 1
+/conf/cube/setISOToDetectorDistance 500
+/conf/cube/setGap 0
+/conf/cube/setSamplesNumber 10
+
+/run/initialize
+#
+#/control/verbose 2
+#/tracking/verbose 2
+#
+#/run/beamOn 1
+#
+/tracking/verbose 0
+/control/verbose 0
+/event/verbose 0
+#/run/beamOn 100000
+/run/beamOn 10000
+
+

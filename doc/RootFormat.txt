@@ -1,0 +1,31 @@
+    tree.root
+
+    TTRee decay
+ - eventID
+ - pos: decay position
+ - time: decay time
+ - muplus_depos_energy: energy deposited in scintillator by mu+
+ - muminus_depos_energy: energy deposited in scintillator by mu-
+calorimeter-particle interaction coordinate:
+ - muplus_depos_ind0: calorimeter number for mu+
+ - muplus_depos_ind1: calorimeter phi section for mu+
+ - muplus_depos_ind2: calorimeter radial section for mu+
+ - muminus_depos_ind0: calorimeter number for mu-
+ - muminus_depos_ind1: calorimeter phi section for mu-
+ - muminus_depos_ind2: calorimeter radial section for mu-
+these brachnes are only provided when cube is enabled. 
+ - muplus_skip_energy: energy of mu+ particle leaving the volume
+ - muminus_skip_energy: energy of mu- particle leaving the volume
+cube-particle interaction coordinate:
+ - muplus_skip_ind0: cube plane number for mu+
+ - muplus_skip_ind1: X pixel of the cube plane for mu+
+ - muplus_skip_ind2: Y pixel of the cube plane for mu+
+ - muminus_skip_ind0: cube plane number for mu-
+ - muminus_skip_ind1: X pixel of the cube plane for mu-
+ - muminus_skip_ind2: Y pixel of the cube plane for mu-
+
+-------------------------
+    histo.root
+
+    TH1D decayPos: decay position histogram
+    TH1D decayTime: decay time histogram
