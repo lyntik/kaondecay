@@ -52,32 +52,46 @@ private:
 
     void DefineMaterials();
 
-    void ConstructTubeMatrixDetector(G4RotationMatrix * rot,
-    		const G4ThreeVector& pos,
-			G4double layerThick,
-			G4double rMin,
-			G4double rMax,
-			G4int layersNumberZ,
-			G4int layersNumberRadial,
-			G4int layersNumberPhi,
-			G4double phi,
-			const G4String& suffix
-			);
+    /// Constructs the "horseshoe" calorimeter.
+    /// @param rot rotation matrix to apply to the entire assembly
+    /// @param pos translation to apply to the entire assembly
+    /// @param layerThick thickness of individual layer
+    /// @param rMin intern radius of the tube-like calorimeter
+    /// @param rMax outern radius of the tube-like calorimeter
+    /// @param layersNumberZ number of layers in longitudial direction
+    /// @param layersNumberRadial number of layers for radial segmentation
+    /// @param layersNumberPhi number of layers in azimuthal segmentation
+    /// @param phi angular length of the covered sector
+    /// @param suffix a naming postfix appended to volume names
+    void ConstructTubeMatrixDetector( const G4String& suffix
+            , G4RotationMatrix * rot
+            , const G4ThreeVector& pos
+            , G4double layerThick
+            , G4double rMin
+            , G4double rMax
+            , G4int layersNumberZ
+            , G4int layersNumberRadial
+            , G4int layersNumberPhi
+            , G4double phi
+            );
 
+    /// Aux method constructing a cube for probing the missed energy
     void ConstructCube(G4double distanceToCenter, G4double gap, G4int samplesNumber);
 
+    /// Constructs the rectangular calorimeter.
+    /// @param rot rotation matrix to apply to the entire assembly
+    /// @param pos translation to apply to the entire assembly
+    /// @param columns number of horizontal segments
+    /// @param rows number of vertical segments
     void ConstructRectangleMatrixDetector(G4RotationMatrix* rot,
-    		const G4ThreeVector& pos,
-			G4int columns,
-			G4int rows,
-			const G4ThreeVector& pixelSize,
-			G4double gap,
-			G4Material* material,
-    		const G4String& suffix
-			);
-
-
-
+            const G4ThreeVector& pos,
+            G4int columns,
+            G4int rows,
+            const G4ThreeVector& pixelSize,
+            G4double gap,
+            G4Material* material,
+            const G4String& suffix
+            );
 };
 
 
