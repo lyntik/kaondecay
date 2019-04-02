@@ -25,6 +25,8 @@ private:
     T index_[IndexDimension];
     G4String prefix_;
     G4double energy_;
+    G4double position_[3];
+    G4double momentum_[3];
     bool inited_;
 public:
     ParticleRecord(const G4String& prefix);
@@ -49,11 +51,21 @@ public:
     /// Returns the instance to pre-initialized state.
     void Clear();
     inline bool isInited();
+
+    /// Entry point setter
+    void SetEP(const G4ThreeVector &);
+
+    /// Momentum at entry point setter
+    void SetMomentum(const G4ThreeVector &);
+
 };
 
 
 
 //========= Implementation: ParticleRecord<T>
+
+// Enable this to get the arrow-like branches
+//#define ARRAY_BRANCHES_ALLOWED
 
 template<class T, unsigned int IndexDimension>
 ParticleRecord<T, IndexDimension>::ParticleRecord(const G4String& prefix)
@@ -96,13 +108,51 @@ void ParticleRecord<T, IndexDimension>::Clear() {
     inited_ = false;
     energy_ = 0;
     memset(&index_, 0, sizeof(index_));
+    for(unsigned char i = 0; i < 3; ++i){
+        position_[i] = momentum_[i] = std::nan("0");
+    }
 }
 
 template<class T, unsigned int IndexDimension>
+void ParticleRecord<T, IndexDimension>::SetEP( const G4ThreeVector & v ) {
+   position_[0] = v[0];
+   position_[1] = v[1];
+   position_[2] = v[2];
+}
+
+template<class T, unsigned int IndexDimension>
+void ParticleRecord<T, IndexDimension>::SetMomentum( const G4ThreeVector & v ) {
+   momentum_[0] = v[0];
+   momentum_[1] = v[1];
+   momentum_[2] = v[2];
+}
+
+
+template<class T, unsigned int IndexDimension>
 void ParticleRecord<T, IndexDimension>::Branch(TTree *tree) {
+    char bf[128];
     tree->Branch((prefix_ + "energy").c_str(), &energy_);
+    # ifdef ARRAY_BRANCHES_ALLOWED
+    tree->Branch( (prefix_ + "entryPoint").c_str()
+                , position_
+                , "x/D:y/D:z/D"
+                , sizeof(position_) );
+    tree->Branch( (prefix_ + "momentum").c_str()
+                , momentum_
+                , "x/D:y/D:z/D"
+                , sizeof(momentum_) );
+    # else
+    for( unsigned char i = 0; i < 3; ++i ) {
+        snprintf( bf, sizeof(bf), "%sentryPoint_%d"
+               , prefix_.c_str(), (int) i );
+        tree->Branch( bf, position_ + i  );
+        snprintf( bf, sizeof(bf), "%smomentum_%d"
+               , prefix_.c_str(), (int) i );
+        tree->Branch( bf, momentum_ + i  );
+    }
+    # endif
     char sz[50];
-    for (unsigned int i = 0; i < IndexDimension; i++) {
+    for( unsigned int i = 0; i < IndexDimension; i++ ) {
         sprintf(sz, "%sind%d", prefix_.c_str(), i);
         tree->Branch(sz, &index_[i]);
     }

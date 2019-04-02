@@ -28,7 +28,7 @@ private:
 public:
     /// Ctr: binds the records references
     CaloSensitiveDetector(G4String name = "");
-    ~CaloSensitiveDetector() {}
+    ~CaloSensitiveDetector();
 
     /// Clears particle records.
     void Initialize(G4HCofThisEvent*);
